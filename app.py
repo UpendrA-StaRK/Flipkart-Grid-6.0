@@ -237,4 +237,22 @@ st.markdown("""
         color: #f0f0f0;
     }
     </style>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+# Additional CSS for smoother transitions
+st.markdown("""
+    <style>
+    /* Fade-in animation for page transitions */
+    .stApp {
+        animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    /* Smooth transitions for buttons */
+    .stButton>button {
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+    }
+    </style>
+    """, unsafe_allow_html=True)
