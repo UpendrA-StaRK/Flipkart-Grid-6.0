@@ -80,7 +80,7 @@ if selection == "User Data Overview":
     st.dataframe(data.head(), use_container_width=True)
 
     st.subheader('Your Input Parameters')
-    st.table(input_df.T.rename(columns={0: 'Value'})  # Transposed for better mobile view
+    st.table(input_df.T.rename(columns={0: 'Value'}))  # Corrected line
 
     def find_similar_users(input_data, dataset, n_neighbors=5):
         features = ['Height (cm)', 'Weight (kg)', 'Chest (cm)', 'Waist (cm)', 'Hip (cm)']
@@ -93,7 +93,6 @@ if selection == "User Data Overview":
         similar_users['Similarity Score'] = 1 / (1 + distances[0])
         return similar_users
 
-    # Find similar users and store in session state
     if st.button('Find Similar Users'):
         st.session_state.similar_users = find_similar_users(input_df, data)
     else:
