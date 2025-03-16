@@ -34,6 +34,19 @@ def load_data():
 
 data = load_data()
 
+# Cache similar user search to reduce sidebar lag
+@st.cache_data(show_spinner=False)
+def find_similar_users(input_data, dataset, n_neighbors=5):
+    features = ['Height (cm)', 'Weight (kg)', 'Chest (cm)', 'Waist (cm)', 'Hip (cm)']
+    scaler = StandardScaler()
+    dataset_scaled = scaler.fit_transform(dataset[features])
+    input_scaled = scaler.transform(input_data[features])
+    nbrs = NearestNeighbors(n_neighbors=n_neighbors, metric='euclidean').fit(dataset_scaled)
+    distances, indices = nbrs.kneighbors(input_scaled)
+    similar_users = dataset.iloc[indices[0]].copy()
+    similar_users['Similarity Score'] = 1 / (1 + distances[0])
+    return similar_users
+
 # Sidebar for navigation
 st.sidebar.title("Navigation")
 selection = st.sidebar.radio("Go to", ["User Data Overview", "Cluster Analysis", "Size Recommendations"])
@@ -42,7 +55,6 @@ selection = st.sidebar.radio("Go to", ["User Data Overview", "Cluster Analysis",
 if 'similar_users' not in st.session_state:
     st.session_state.similar_users = pd.DataFrame()
 
-# Input Parameters at the Top
 if selection == "User Data Overview":
     st.header("🔍 User Input Parameters")
 
@@ -75,17 +87,6 @@ if selection == "User Data Overview":
 
     st.subheader('User Input Parameters')
     st.write(input_df)
-
-    def find_similar_users(input_data, dataset, n_neighbors=5):
-        features = ['Height (cm)', 'Weight (kg)', 'Chest (cm)', 'Waist (cm)', 'Hip (cm)']
-        scaler = StandardScaler()
-        dataset_scaled = scaler.fit_transform(dataset[features])
-        input_scaled = scaler.transform(input_data[features])
-        nbrs = NearestNeighbors(n_neighbors=n_neighbors, metric='euclidean').fit(dataset_scaled)
-        distances, indices = nbrs.kneighbors(input_scaled)
-        similar_users = dataset.iloc[indices[0]]
-        similar_users['Similarity Score'] = 1 / (1 + distances[0])
-        return similar_users
 
     # Find similar users and store in session state
     st.session_state.similar_users = find_similar_users(input_df, data)
