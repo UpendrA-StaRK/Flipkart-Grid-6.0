@@ -16,11 +16,108 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Title with gradient effect
+# Modern UI styling (Dark Mode)
 st.markdown("""
     <style>
+    /* General Background */
+    .stApp {
+        background: linear-gradient(135deg, #1f2937, #111827);
+        font-family: 'Inter', sans-serif;
+        color: #e5e7eb !important;
+    }
+    
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(195deg, #374151, #1f2937) !important;
+        padding: 1rem;
+    }
+    .sidebar-content {
+        color: #e5e7eb !important;
+    }
+    [data-baseweb="radio"] label {
+        color: #e5e7eb !important;
+    }
+
+    /* Card Styling */
+    .custom-card {
+        background: rgba(31, 41, 55, 0.85);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        margin: 1rem 0;
+        color: #f3f4f6 !important;
+    }
+
+    /* Button Styling */
+    .stButton>button {
+        background: linear-gradient(45deg, #3b82f6, #1d4ed8) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 0.5rem 1.5rem !important;
+        transition: all 0.3s ease-in-out !important;
+        border: none !important;
+        font-weight: bold;
+    }
+    .stButton>button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(59,130,246,0.4);
+    }
+
+    /* Slider Styling */
+    .stSlider>div>div>div>div {
+        background: #3b82f6 !important;
+    }
+
+    /* Tabs Styling */
+    [data-baseweb="tab-list"] button {
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 8px !important;
+        transition: all 0.3s ease-in-out !important;
+        font-weight: bold;
+        color: #e5e7eb !important;
+    }
+    [data-baseweb="tab-list"] button[aria-selected="true"] {
+        background: #3b82f6 !important;
+        color: white !important;
+    }
+
+    /* DataFrame Styling */
+    .stDataFrame {
+        border-radius: 12px !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+    }
+
+    /* Table Styling */
+    table {
+        background: rgba(31, 41, 55, 0.85) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+        color: #e5e7eb !important;
+    }
+    th {
+        background: #3b82f6 !important;
+        color: white !important;
+    }
+    td {
+        background: transparent !important;
+        color: #f3f4f6 !important;
+    }
+
+    /* Section Headers */
+    h2 {
+        border-bottom: 3px solid #3b82f6;
+        padding-bottom: 0.5rem !important;
+        color: #f3f4f6 !important;
+    }
+
+    /* Plotly Chart Styling */
+    .js-plotly-plot .plotly, .js-plotly-plot .plotly div {
+        border-radius: 12px !important;
+    }
+
+    /* Gradient Effect for Title */
     .gradient-text {
-        background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+        background: linear-gradient(45deg, #3b82f6, #1e3a8a);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-weight: 700 !important;
@@ -28,6 +125,8 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
+# Title with gradient effect
 st.markdown('<h1 class="gradient-text">🛍️ AI-Powered Size Chart Generator for Apparel Sellers</h1>', unsafe_allow_html=True)
 
 # Load the synthetic dataset
@@ -49,100 +148,6 @@ def load_data():
     return data
 
 data = load_data()
-
-# Modern UI styling
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: #f8fafc;
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(195deg, #1e3a8a, #1d4ed8) !important;
-        padding: 1rem;
-    }
-    .sidebar-content {
-        color: white !important;
-    }
-    [data-baseweb="radio"] label {
-        color: white !important;
-    }
-    
-    /* Card styling */
-    .custom-card {
-        background: white;
-        border-radius: 12px;
-        padding: 2rem;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        margin: 1rem 0;
-    }
-    
-    /* Button styling */
-    .stButton>button {
-        background: linear-gradient(45deg, #1e3a8a, #3b82f6) !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 0.5rem 1.5rem !important;
-        transition: all 0.3s !important;
-        border: none !important;
-    }
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(59,130,246,0.3);
-    }
-    
-    /* Slider styling */
-    .stSlider>div>div>div>div {
-        background: #3b82f6 !important;
-    }
-    
-    /* Tabs styling */
-    [data-baseweb="tab-list"] button {
-        padding: 0.75rem 1.5rem !important;
-        border-radius: 8px !important;
-        transition: all 0.3s !important;
-    }
-    [data-baseweb="tab-list"] button[aria-selected="true"] {
-        background: #3b82f6 !important;
-        color: white !important;
-    }
-    
-    /* Dataframe styling */
-    .stDataFrame {
-        border-radius: 12px !important;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1) !important;
-    }
-    
-    /* Table styling */
-    table {
-        background: white !important;
-        border-radius: 12px !important;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1) !important;
-    }
-    th {
-        background: #3b82f6 !important;
-        color: white !important;
-    }
-    td {
-        background: white !important;
-        color: #1e293b !important;
-    }
-    
-    /* Section headers */
-    h2 {
-        border-bottom: 3px solid #3b82f6;
-        padding-bottom: 0.5rem !important;
-        color: #1e293b !important;
-    }
-    
-    /* Plotly chart styling */
-    .js-plotly-plot .plotly, .js-plotly-plot .plotly div {
-        border-radius: 12px !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
